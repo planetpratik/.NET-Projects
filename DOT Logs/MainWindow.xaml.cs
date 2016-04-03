@@ -23,8 +23,8 @@ namespace DOT_Logs
         public MainWindow()
         {
             InitializeComponent();
-            WelcomePage welcome = new WelcomePage();
-            pageview.Navigate(welcome);
+            AuthenticationPage authorised = new AuthenticationPage();
+            pageview.Navigate(authorised);
         }
 
         
