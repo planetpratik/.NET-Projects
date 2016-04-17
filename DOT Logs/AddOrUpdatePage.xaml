@@ -22,7 +22,7 @@
 
         <ComboBox x:Name="nameOfProgrammeComboBox" HorizontalAlignment="Right" Margin="0,123.983,46.5,0" VerticalAlignment="Top" Width="330" Height="35" RenderTransformOrigin="0.5,0.49" d:LayoutOverrides="HorizontalAlignment" FontSize="16"/>
         <ComboBox x:Name="nameOfClassCombobox" HorizontalAlignment="Right" Margin="0,176.733,46.5,0" VerticalAlignment="Top" Width="330" Height="35" d:LayoutOverrides="HorizontalAlignment" FontSize="16" SelectionChanged="nameOfClassChanged"/>
-        <ComboBox x:Name="semesterComboBox" HorizontalAlignment="Right" Margin="0,233.013,46.5,0" VerticalAlignment="Top" Width="330" Height="35" d:LayoutOverrides="HorizontalAlignment" FontSize="16"/>
+        <ComboBox x:Name="semesterComboBox" HorizontalAlignment="Right" Margin="0,233.013,46.5,0" VerticalAlignment="Top" Width="330" Height="35" d:LayoutOverrides="HorizontalAlignment" FontSize="16" SelectionChanged="nameOfSubjectsToLoad"/>
         <ComboBox x:Name="nameOfSubjectCombobox" HorizontalAlignment="Right" Margin="0,290.013,46.5,0" VerticalAlignment="Top" Width="330" Height="35" d:LayoutOverrides="HorizontalAlignment" FontSize="16"/>
         <ComboBox x:Name="batchCombobox" HorizontalAlignment="Right" Margin="0,350.0,46.5,0" VerticalAlignment="Top" Width="330" Height="35" d:LayoutOverrides="HorizontalAlignment" FontSize="16"/>
 
@@ -35,15 +35,14 @@
             </Button.Background>
         </Button>
         <DatePicker x:Name="datePicker" HorizontalAlignment="Right" Height="48" Margin="0,548.6,46.5,0" VerticalAlignment="Top" Width="330" FontSize="18.667" BorderThickness="0"/>
-        <Label x:Name="nameOfTheStudentLabel" Content="Name of the Student" HorizontalAlignment="Left" Height="42" Margin="33,410,0,0" VerticalAlignment="Top" Width="201" FontSize="18.667"/>
-        <TextBox x:Name="nameOfTheStudentTextbox" HorizontalAlignment="Right" Height="42" Margin="0,410,46.5,187" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="330" FontSize="16"/>
+        <Label x:Name="rollNoLabel" Content="Roll Number" HorizontalAlignment="Left" Height="42" Margin="33,410,0,0" VerticalAlignment="Top" Width="201" FontSize="18.667"/>
+        <TextBox x:Name="rollNoTextbox" HorizontalAlignment="Right" Height="35" Margin="0,410,46.5,187" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="330" FontSize="16"/>
         <Label x:Name="nameOfTheEquipmentLabel" Content="Name Of The Equipment" HorizontalAlignment="Left" Margin="33,481.5,0,0" Width="268.5" Height="33" VerticalAlignment="Top" FontSize="18.667"/>
-        <ComboBox x:Name="nameOfTheEquipmentComboBox" HorizontalAlignment="Right" Height="35" Margin="0,481.5,46.5,0" VerticalAlignment="Top" Width="330" FontSize="16"/>
+        <TextBox x:Name="nameOfTheEquipmentComboBox" HorizontalAlignment="Right" Height="35" Margin="0,481.5,46.5,0" VerticalAlignment="Top" Width="330" FontSize="16"/>
         <Button x:Name="addNewEntryButton" Content="Add New Entry" HorizontalAlignment="Left" Height="51" Margin="33,639.288,0,0" VerticalAlignment="top" Width="201" FontSize="15" Background="#FF88D880" Click="addNewEntryButtonClicked"/>
         <Button x:Name="updateExistingEntryButton" Content="Update Existing Entry" HorizontalAlignment="Left" Height="51" Margin="312,639.288,0,0" VerticalAlignment="top" Width="201" FontSize="15" Background="#FFE5D93C"/>
         <Button x:Name="clearButton" Content="Clear" Height="51" Margin="0,639.288,316.474,0" VerticalAlignment="top" Width="201" FontSize="15" HorizontalAlignment="Right" Background="#FFBF90D9"/>
         <Button x:Name="viewLogButton" Content="View Log For Selected Batch" HorizontalAlignment="Right" Height="51" Margin="0,639.288,46.5,0" VerticalAlignment="top" Width="201" FontSize="15" Background="#FF5AA6E5"/>
         <Button x:Name="removeExistingEntryButton" Content="Remove Existing Entry" Height="51" Margin="597,639.288,596.975,0" VerticalAlignment="top" FontSize="15" Background="#FFE94D51"/>
-        <ComboBox x:Name="nameOfTheStudentComboBox" Height="35" Margin="360,410,429.865,238.288" VerticalAlignment="top" HorizontalAlignment="Right" FontSize="16" Width="330"/>
     </Grid>
 </Page>
