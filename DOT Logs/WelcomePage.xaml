@@ -23,7 +23,7 @@
             </Menu.BitmapEffect>
             <MenuItem Height="30" Width="34">
                 <MenuItem Header="Add Or Update Log" Click="AddOrUpdateLogButtonClicked"/>
-                <MenuItem Header="View Entire Logs"/>
+                <MenuItem Header="View Entire Logs" Click="ViewEntireLogButtonClicked"/>
                 <MenuItem Header="Acknowledgements"/>
             </MenuItem>
 
