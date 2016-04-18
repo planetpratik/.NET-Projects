@@ -21,8 +21,9 @@ namespace DOT_Logs
     /// </summary>
     public partial class AddOrUpdatePage : Page
     {
-        Boolean isDatabaseAlreadyCreated = false;
+        bool isDatabaseAlreadyCreated = false;
         SQLiteConnection connection;
+        int rowID;
         public AddOrUpdatePage()
         {
             InitializeComponent();
@@ -54,8 +55,11 @@ namespace DOT_Logs
                           [BatchName] VARCHAR(2) NOT NULL,
                           [SemesterName] VARCHAR(3) NOT NULL,
                           [SubjectName] VARCHAR(30) NULL,
-                          [EquipmentName] VARCHAR(35) NULL
-                          [Date] VARCHAR(20) NULL
+                          [EquipmentName] VARCHAR(35) NULL,
+                          [IssueDate] VARCHAR(20) NULL,
+                          [IssueTime] VARCHAR(20) NULL,
+                          [ReturnDate] VARCHAR(20) NULL,
+                          [ReturnTime] VARCHAR(20) NULL
                           )";
             SQLiteCommand createTableCommand = new SQLiteCommand(createTableQuery, connection);
             createTableCommand.ExecuteNonQuery();
@@ -84,17 +88,108 @@ namespace DOT_Logs
             string addNewEntryQuery = @"INSERT INTO StudentLog(
                                         RollNo,ClassName,ProgrammeName,
                                         BatchName,SemesterName,SubjectName,
-                                        EquipmentName,Date) 
-                                        Values ('"+rollNoTextbox.Text+"',"
-                                        +"'"+nameOfClassCombobox.Text+"',"
-                                        +"'"+nameOfProgrammeComboBox.Text+"',"
-                                        +"'"+batchCombobox.Text+"',"
-                                        +"'"+semesterComboBox.Text+"',"
-                                        +"'"+nameOfSubjectCombobox.Text+"',"
-                                        +"'"+nameOfTheEquipmentComboBox.Text+"',"
-                                        +"'"+datePicker.Text+"')";
-            SQLiteCommand addNewEntryCommand = new SQLiteCommand(addNewEntryQuery, connection);
-            addNewEntryCommand.ExecuteNonQuery();
+                                        EquipmentName,IssueDate,IssueTime,ReturnDate,ReturnTime) 
+                                        Values ("+rollNoTextbox.Text+","
+                                        +"'"+(string)nameOfClassCombobox.SelectedItem+"',"
+                                        +"'"+(string)nameOfProgrammeComboBox.SelectedItem+"',"
+                                        +"'"+(string)batchCombobox.SelectedItem+"',"
+                                        +"'"+(string)semesterComboBox.SelectedItem+"',"
+                                        +"'"+(string)nameOfSubjectCombobox.SelectedItem+"',"
+                                        +"'"+nameOfTheEquipmentTextBox.Text+"',"
+                                        +"'"+issueDatePicker.Text + "',"
+                                        +"'"+issueTimeTextbox.Text + "',"
+                                        +"'"+returnDatePicker.Text+"',"
+                                        + "'"+returnTimeTextbox.Text+"')";
+            Console.WriteLine(addNewEntryQuery);
+            try
+            {
+                SQLiteCommand addNewEntryCommand = new SQLiteCommand(addNewEntryQuery, connection);
+                addNewEntryCommand.ExecuteNonQuery();
+                MessageBox.Show("New Entry Added Successfully", "Success !");
+                this.closeDatabaseConnection();
+            }
+            catch(SQLiteException error)
+            {
+                Console.WriteLine(error.Message);
+                MessageBox.Show(error.Message,"Insert Command Error");
+                this.closeDatabaseConnection();
+            }
+           
+        }
+
+        public void clearButtonClicked(object sender, RoutedEventArgs e)
+        {
+            
+            rollNoTextbox.Text = "";
+            nameOfClassCombobox.Items.Clear();
+            nameOfProgrammeComboBox.Items.Clear();
+            batchCombobox.Items.Clear();
+            semesterComboBox.Items.Clear();
+            nameOfSubjectCombobox.Items.Clear();
+            nameOfTheEquipmentTextBox.Text = "";
+            issueDatePicker.Text = "";
+            issueTimeTextbox.Text = "";
+            returnDatePicker.Text = "";
+            returnTimeTextbox.Text = "";
+            this.loadComboBoxValues();
+        }
+
+        public void updateButtonClicked(object sender,RoutedEventArgs e)
+        {
+            this.createDatabaseConnecion();
+            this.createTable();
+            string updateEntryQuery = @"UPDATE StudentLog SET
+                                        RollNo = " + rollNoTextbox.Text + ","
+                                        + "ClassName = " + (string)nameOfClassCombobox.SelectedItem + ","
+                                        + "ProgrammeName = " + (string)nameOfProgrammeComboBox.SelectedItem + ","
+                                        + "BatchName = " + (string)batchCombobox.SelectedItem + ","
+                                        + "SemesterName = " + (string)semesterComboBox.SelectedItem + ","
+                                        + "SubjectName = " + (string)nameOfSubjectCombobox.SelectedItem + ","
+                                        + "EquipmentName = " + nameOfTheEquipmentTextBox.Text + ","
+                                        + "IssueDate = " + issueDatePicker.Text + ","
+                                        + "IssueTime = " + issueTimeTextbox.Text + ","
+                                        + "ReturnDate = " + returnDatePicker.Text + ","
+                                        + "ReturnTime = " + returnTimeTextbox.Text
+                                        + " WHERE ID = " + rowID;
+
+            Console.WriteLine(updateEntryQuery);
+            try
+            {
+                SQLiteCommand updateEntryCommand = new SQLiteCommand(updateEntryQuery, connection);
+                updateEntryCommand.ExecuteNonQuery();
+                MessageBox.Show("Table Entry Is Updated Successfully", "Success !");
+                this.closeDatabaseConnection();
+            }
+            catch (SQLiteException error)
+            {
+                Console.WriteLine(error.Message);
+                MessageBox.Show(error.Message, "Update Command Error");
+                this.closeDatabaseConnection();
+            }
+    
+
+        }
+
+        public void removeExistingEntryButtonClicked(object sender, RoutedEventArgs e)
+        {
+            this.createDatabaseConnecion();
+            this.createTable();
+            string deleteEntryQuery = @"DELETE FROM StudentLog
+                                        WHERE RollNo=" + rollNoTextbox.Text + "AND EquipmentName='" + nameOfTheEquipmentTextBox.Text + "'";
+
+            Console.WriteLine(deleteEntryQuery);
+            try
+            {
+                SQLiteCommand deleteEntryCommand = new SQLiteCommand(deleteEntryQuery, connection);
+                deleteEntryCommand.ExecuteNonQuery();
+            }
+            catch (SQLiteException error)
+            {
+                Console.WriteLine(error.Message);
+                MessageBox.Show(error.Message, "Remove Entry Command Error");
+                this.closeDatabaseConnection();
+            }
+            this.closeDatabaseConnection();
 
         }
 

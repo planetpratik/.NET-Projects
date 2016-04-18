@@ -29,18 +29,7 @@
         </TextBlock>
         <Button x:Name="loginButton" Content="Login" Width="200" Height="29.5" Margin="247.899,332.463,248.601,0" VerticalAlignment="Top" Click="loginButtonClicked" Background="#FF8AF156" FontSize="18.667" VerticalContentAlignment="Top"/>
         <PasswordBox x:Name="passwordTextBox" Height="30" Width="300" Margin="220.101,274,223.5,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontSize="18.667"/>
-        <TextBlock IsHitTestVisible="False" Text="Enter Your Password" Margin="222.875,274,227.601,0" Foreground="DarkGray" FontSize="14" Height="30" LineHeight="16" TextAlignment="Center" d:LayoutOverrides="Width" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Visible">
-            <TextBlock.Style>
-                <Style TargetType="{x:Type TextBlock}">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Text, ElementName=passwordTextBox}" Value="">
-                            <Setter Property="Visibility" Value="Visible"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </TextBlock.Style>
-        </TextBlock>
+        
         <Label x:Name="statusLabel" Content="" Margin="-50,400,-50.601,79.75" Height="35" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="#FFC23030" FontSize="18.667"/>
         
     </Grid>

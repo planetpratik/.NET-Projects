@@ -8,7 +8,10 @@
         mc:Ignorable="d"
         Title="Welcome To Shivaji University, Kolhapur" Height="450" Width="600"
         WindowState="Maximized">
-    <Frame Name="pageview" NavigationUIVisibility="Hidden">
-        
-    </Frame>
+    <ScrollViewer
+        VerticalScrollBarVisibility="Hidden">
+        <Frame Name="pageview" NavigationUIVisibility="Hidden">
+
+        </Frame>
+    </ScrollViewer>
 </Window>
