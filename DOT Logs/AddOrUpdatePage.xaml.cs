@@ -193,6 +193,12 @@ namespace DOT_Logs
 
         }
 
+        public void viewLogButtonClicked(object sender, RoutedEventArgs e)
+        {
+            ViewLogPage viewLog = new ViewLogPage();
+            this.NavigationService.Navigate(viewLog);
+        }
+
         public void loadComboBoxValues()
         {
             nameOfProgrammeComboBox.Items.Add("Computer Science & Technology");

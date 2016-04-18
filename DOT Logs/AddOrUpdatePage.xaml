@@ -45,7 +45,7 @@
         <Button x:Name="addNewEntryButton" Content="Add New Entry" HorizontalAlignment="Left" Height="51" Margin="33,820,0,0" VerticalAlignment="top" Width="201" FontSize="15" Background="#FF88D880" Click="addNewEntryButtonClicked"/>
         <Button x:Name="updateExistingEntryButton" Content="Update Existing Entry" HorizontalAlignment="Left" Height="51" Margin="312,820,0,0" VerticalAlignment="top" Width="201" FontSize="15" Background="#FFE5D93C" Click="updateButtonClicked"/>
         <Button x:Name="clearButton" Content="Clear" Height="51" Margin="0,820,316.474,0" VerticalAlignment="top" Width="201" FontSize="15" HorizontalAlignment="Right" Background="#FFBF90D9" Click="clearButtonClicked"/>
-        <Button x:Name="viewLogButton" Content="View Log For Selected Batch" HorizontalAlignment="Right" Height="51" Margin="0,820,46.5,0" VerticalAlignment="top" Width="201" FontSize="15" Background="#FF5AA6E5"/>
+        <Button x:Name="viewLogButton" Content="View Log" HorizontalAlignment="Right" Height="51" Margin="0,820,46.5,0" VerticalAlignment="top" Width="201" FontSize="15" Background="#FF5AA6E5" Click="viewLogButtonClicked"/>
         <Button x:Name="removeExistingEntryButton" Content="Remove Existing Entry" Height="51" Margin="597,820,596.975,0" VerticalAlignment="top" FontSize="15" Background="#FFE94D51" Click="removeExistingEntryButtonClicked"/>
         <TextBox x:Name="issueTimeTextbox" HorizontalAlignment="Right" Height="35" Margin="0,600,46.5,187" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="330" FontSize="16"/>
         <DatePicker x:Name="returnDatePicker" HorizontalAlignment="Right" Height="48" Margin="0,660,46.5,0" VerticalAlignment="Top" Width="330" FontSize="18.667" BorderThickness="0"/>

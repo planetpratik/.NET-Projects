@@ -29,5 +29,10 @@ namespace DOT_Logs
             AddOrUpdatePage addorupdatepage = new AddOrUpdatePage();
             this.NavigationService.Navigate(addorupdatepage);
         }
+        private void ViewEntireLogButtonClicked(object sender, RoutedEventArgs e)
+        {
+            ViewLogPage viewLog = new ViewLogPage();
+            this.NavigationService.Navigate(viewLog);
+        }
     }
 }
