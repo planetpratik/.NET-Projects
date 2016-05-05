@@ -21,7 +21,7 @@ namespace DOT_Logs
     /// </summary>
     public partial class AddOrUpdatePage : Page
     {
-        bool isDatabaseAlreadyCreated = false;
+        //bool isDatabaseAlreadyCreated = false;
         SQLiteConnection connection;
         int rowID;
         public AddOrUpdatePage()
@@ -32,9 +32,10 @@ namespace DOT_Logs
 
         public void initDatabase()
         {
-            SQLiteConnection.CreateFile("StudentLog.sqlite");
-            isDatabaseAlreadyCreated = true;
-            
+            if (!System.IO.File.Exists("StudentLog.sqlite"))
+            {
+                SQLiteConnection.CreateFile("StudentLog.sqlite");
+            }                        
 
         }
 
@@ -78,11 +79,7 @@ namespace DOT_Logs
 
         public void addNewEntryButtonClicked(object sender, RoutedEventArgs e)
         {
-            if (!isDatabaseAlreadyCreated)
-            {
-                this.initDatabase();
-            }
-
+            this.initDatabase();
             this.createDatabaseConnecion();
             this.createTable();
             string addNewEntryQuery = @"INSERT INTO StudentLog(
