@@ -21,7 +21,6 @@ namespace DOT_Logs
     /// </summary>
     public partial class AddOrUpdatePage : Page
     {
-        //bool isDatabaseAlreadyCreated = false;
         SQLiteConnection connection;
         int rowID;
         public AddOrUpdatePage()
@@ -113,7 +112,10 @@ namespace DOT_Logs
             }
            
         }
+        public void searchButtonClicked(object sender, RoutedEventArgs e)
+        {
 
+        }
         public void clearButtonClicked(object sender, RoutedEventArgs e)
         {
             
