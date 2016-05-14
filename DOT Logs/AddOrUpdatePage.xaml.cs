@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.SQLite;
+using System.Data;
 
 namespace DOT_Logs
 {
@@ -22,6 +23,9 @@ namespace DOT_Logs
     public partial class AddOrUpdatePage : Page
     {
         SQLiteConnection connection;
+        DataSet DS = new DataSet();
+        SQLiteDataAdapter DA;
+        DataTable DT = new DataTable();
         int rowID;
         public AddOrUpdatePage()
         {
@@ -114,7 +118,110 @@ namespace DOT_Logs
         }
         public void searchButtonClicked(object sender, RoutedEventArgs e)
         {
+            this.createDatabaseConnecion();
+            string searchQueryString = @"SELECT * FROM StudentLog
+                                        WHERE RollNo = "+rollNoTextbox.Text+" AND "+
+                                        "ClassName = '"+(string)nameOfClassCombobox.SelectedItem+"' AND "+
+                                        "ProgrammeName = '"+(string)nameOfProgrammeComboBox.SelectedItem+"'";
+            Console.WriteLine(searchQueryString);
+            try
+            {
+                SQLiteCommand searchQueryCommand = new SQLiteCommand(searchQueryString,connection);
+                DS.Reset();
+                DA = new SQLiteDataAdapter(searchQueryCommand);
+                DA.Fill(DS);
+                DT = DS.Tables[0];
+                if (DT.Rows.Count > 0)
+                {
+                    rowID = 0;
+                    batchCombobox.SelectedItem = DT.Rows[rowID]["BatchName"].ToString();
+                    semesterComboBox.SelectedItem = DT.Rows[rowID]["SemesterName"].ToString();
+                    this.nameOfSubjectsToLoad(sender,e);
+                    nameOfSubjectCombobox.SelectedItem = DT.Rows[rowID]["SubjectName"].ToString();
+                    nameOfTheEquipmentTextBox.Text = DT.Rows[rowID]["EquipmentName"].ToString();
+                    issueDatePicker.Text = DT.Rows[rowID]["IssueDate"].ToString();
+                    issueTimeTextbox.Text = DT.Rows[rowID]["IssueTime"].ToString();
+                    returnDatePicker.Text = DT.Rows[rowID]["ReturnDate"].ToString();
+                    returnTimeTextbox.Text = DT.Rows[rowID]["ReturnTime"].ToString();
+                   
+                }
+                else
+                {
+                    if (rollNoTextbox.Text == null || nameOfClassCombobox.SelectedItem == null || nameOfProgrammeComboBox.SelectedItem == null)
+                    {
+                        MessageBox.Show("SQL Query Input Error. You Must have to provide Roll No, Class Name & Programme Name.", "Error");
+                    }
+                    MessageBox.Show("No Record Found In The Database");
+                }
+            }
+            catch(SQLiteException error)
+            {
+                if (rollNoTextbox.Text == null || nameOfClassCombobox.SelectedItem == null || nameOfProgrammeComboBox.SelectedItem == null)
+                {
+                    MessageBox.Show("SQL Query Input Error. You Must have to provide Roll No, Class Name & Programme Name.", "Error");
+                }
+                else
+                {
+                    Console.WriteLine(error.Message);
+                    MessageBox.Show(error.Message, "SQL Syntax Error");
+                   
+                }
+                this.closeDatabaseConnection();
+            }
+        }
+        public void resultNavigationLeftButtonClicked(object sender, RoutedEventArgs e)
+        {
+            if (rowID == DT.Rows.Count  || rowID != 0)
+            { 
+                    rowID--;
+                    batchCombobox.SelectedItem = DT.Rows[rowID]["BatchName"].ToString();
+                    semesterComboBox.SelectedItem = DT.Rows[rowID]["SemesterName"].ToString();
+                    this.nameOfSubjectsToLoad(sender, e);
+                    nameOfSubjectCombobox.SelectedItem = DT.Rows[rowID]["SubjectName"].ToString();
+                    nameOfTheEquipmentTextBox.Text = DT.Rows[rowID]["EquipmentName"].ToString();
+                    issueDatePicker.Text = DT.Rows[rowID]["IssueDate"].ToString();
+                    issueTimeTextbox.Text = DT.Rows[rowID]["IssueTime"].ToString();
+                    returnDatePicker.Text = DT.Rows[rowID]["ReturnDate"].ToString();
+                    returnTimeTextbox.Text = DT.Rows[rowID]["ReturnTime"].ToString();
+                
+            }
+            else
+            {
+                MessageBox.Show("No More Records To See");
+            }
 
+
+        }
+        public void resultNavigationRightButtonClicked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (rowID < DT.Rows.Count - 1)
+                {
+                    rowID++;
+                    batchCombobox.SelectedItem = DT.Rows[rowID]["BatchName"].ToString();
+                    semesterComboBox.SelectedItem = DT.Rows[rowID]["SemesterName"].ToString();
+                    this.nameOfSubjectsToLoad(sender, e);
+                    nameOfSubjectCombobox.SelectedItem = DT.Rows[rowID]["SubjectName"].ToString();
+                    nameOfTheEquipmentTextBox.Text = DT.Rows[rowID]["EquipmentName"].ToString();
+                    issueDatePicker.Text = DT.Rows[rowID]["IssueDate"].ToString();
+                    issueTimeTextbox.Text = DT.Rows[rowID]["IssueTime"].ToString();
+                    returnDatePicker.Text = DT.Rows[rowID]["ReturnDate"].ToString();
+                    returnTimeTextbox.Text = DT.Rows[rowID]["ReturnTime"].ToString();
+
+                }
+                else
+                {
+                    MessageBox.Show("No More Records To See");
+                }
+
+            }
+            catch(SQLiteException error)
+            {
+                Console.WriteLine(error.Message);
+                MessageBox.Show(error.Message, "No Result Found");
+                this.closeDatabaseConnection();
+            }
         }
         public void clearButtonClicked(object sender, RoutedEventArgs e)
         {
@@ -194,6 +301,10 @@ namespace DOT_Logs
 
         public void viewLogButtonClicked(object sender, RoutedEventArgs e)
         {
+            if (connection != null)
+            {
+                this.closeDatabaseConnection();
+            }
             ViewLogPage viewLog = new ViewLogPage();
             this.NavigationService.Navigate(viewLog);
         }
