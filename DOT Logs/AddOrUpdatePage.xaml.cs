@@ -27,10 +27,13 @@ namespace DOT_Logs
         SQLiteDataAdapter DA;
         DataTable DT = new DataTable();
         int rowID;
+        int idToUpdate;
         public AddOrUpdatePage()
         {
             InitializeComponent();
             this.loadComboBoxValues();
+            updateExistingEntryButton.IsEnabled = false;
+            removeExistingEntryButton.IsEnabled = false;
         }
 
         public void initDatabase()
@@ -134,6 +137,7 @@ namespace DOT_Logs
                 if (DT.Rows.Count > 0)
                 {
                     rowID = 0;
+                    idToUpdate = Int32.Parse(DT.Rows[rowID]["ID"].ToString());
                     batchCombobox.SelectedItem = DT.Rows[rowID]["BatchName"].ToString();
                     semesterComboBox.SelectedItem = DT.Rows[rowID]["SemesterName"].ToString();
                     this.nameOfSubjectsToLoad(sender,e);
@@ -143,6 +147,8 @@ namespace DOT_Logs
                     issueTimeTextbox.Text = DT.Rows[rowID]["IssueTime"].ToString();
                     returnDatePicker.Text = DT.Rows[rowID]["ReturnDate"].ToString();
                     returnTimeTextbox.Text = DT.Rows[rowID]["ReturnTime"].ToString();
+                    updateExistingEntryButton.IsEnabled = true;
+                    removeExistingEntryButton.IsEnabled = true;
                    
                 }
                 else
@@ -174,6 +180,7 @@ namespace DOT_Logs
             if (rowID == DT.Rows.Count  || rowID != 0)
             { 
                     rowID--;
+                    idToUpdate = Int32.Parse(DT.Rows[rowID]["ID"].ToString());
                     batchCombobox.SelectedItem = DT.Rows[rowID]["BatchName"].ToString();
                     semesterComboBox.SelectedItem = DT.Rows[rowID]["SemesterName"].ToString();
                     this.nameOfSubjectsToLoad(sender, e);
@@ -199,6 +206,7 @@ namespace DOT_Logs
                 if (rowID < DT.Rows.Count - 1)
                 {
                     rowID++;
+                    idToUpdate = Int32.Parse(DT.Rows[rowID]["ID"].ToString());
                     batchCombobox.SelectedItem = DT.Rows[rowID]["BatchName"].ToString();
                     semesterComboBox.SelectedItem = DT.Rows[rowID]["SemesterName"].ToString();
                     this.nameOfSubjectsToLoad(sender, e);
@@ -238,25 +246,27 @@ namespace DOT_Logs
             returnDatePicker.Text = "";
             returnTimeTextbox.Text = "";
             this.loadComboBoxValues();
+            updateExistingEntryButton.IsEnabled = false;
+            removeExistingEntryButton.IsEnabled = false;
         }
 
         public void updateButtonClicked(object sender,RoutedEventArgs e)
         {
             this.createDatabaseConnecion();
             this.createTable();
-            string updateEntryQuery = @"UPDATE StudentLog SET
-                                        RollNo = " + rollNoTextbox.Text + ","
-                                        + "ClassName = " + (string)nameOfClassCombobox.SelectedItem + ","
-                                        + "ProgrammeName = " + (string)nameOfProgrammeComboBox.SelectedItem + ","
-                                        + "BatchName = " + (string)batchCombobox.SelectedItem + ","
-                                        + "SemesterName = " + (string)semesterComboBox.SelectedItem + ","
-                                        + "SubjectName = " + (string)nameOfSubjectCombobox.SelectedItem + ","
-                                        + "EquipmentName = " + nameOfTheEquipmentTextBox.Text + ","
-                                        + "IssueDate = " + issueDatePicker.Text + ","
-                                        + "IssueTime = " + issueTimeTextbox.Text + ","
-                                        + "ReturnDate = " + returnDatePicker.Text + ","
-                                        + "ReturnTime = " + returnTimeTextbox.Text
-                                        + " WHERE ID = " + rowID;
+            string updateEntryQuery = @"UPDATE StudentLog SET"
+                                        +" RollNo = " + rollNoTextbox.Text + ","
+                                        +" ClassName = '" + (string)nameOfClassCombobox.SelectedItem + "',"
+                                        +" ProgrammeName = '" + (string)nameOfProgrammeComboBox.SelectedItem + "',"
+                                        +" BatchName = '" + (string)batchCombobox.SelectedItem + "',"
+                                        +" SemesterName = '" + (string)semesterComboBox.SelectedItem + "',"
+                                        +" SubjectName = '" + (string)nameOfSubjectCombobox.SelectedItem + "',"
+                                        +" EquipmentName = '" + nameOfTheEquipmentTextBox.Text + "',"
+                                        +" IssueDate = '" + issueDatePicker.Text + "',"
+                                        +" IssueTime = '" + issueTimeTextbox.Text + "',"
+                                        +" ReturnDate = '" + returnDatePicker.Text + "',"
+                                        +" ReturnTime = '" + returnTimeTextbox.Text+"'"
+                                        +" WHERE ID = " + idToUpdate;
 
             Console.WriteLine(updateEntryQuery);
             try
@@ -281,19 +291,23 @@ namespace DOT_Logs
             this.createDatabaseConnecion();
             this.createTable();
             string deleteEntryQuery = @"DELETE FROM StudentLog
-                                        WHERE RollNo=" + rollNoTextbox.Text + "AND EquipmentName='" + nameOfTheEquipmentTextBox.Text + "'";
+                                        WHERE ID = "+idToUpdate;
 
             Console.WriteLine(deleteEntryQuery);
             try
             {
                 SQLiteCommand deleteEntryCommand = new SQLiteCommand(deleteEntryQuery, connection);
                 deleteEntryCommand.ExecuteNonQuery();
+                MessageBox.Show("Entry Is Deleted Successfully", "Success !");
+                this.closeDatabaseConnection();
+                this.clearButtonClicked(sender, e);
             }
             catch (SQLiteException error)
             {
                 Console.WriteLine(error.Message);
                 MessageBox.Show(error.Message, "Remove Entry Command Error");
                 this.closeDatabaseConnection();
+                this.clearButtonClicked(sender,e);
             }
             this.closeDatabaseConnection();
 
