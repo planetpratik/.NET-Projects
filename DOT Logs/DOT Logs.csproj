@@ -95,6 +95,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AcknowledgementsPage.xaml.cs">
+      <DependentUpon>AcknowledgementsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddOrUpdatePage.xaml.cs">
       <DependentUpon>AddOrUpdatePage.xaml</DependentUpon>
     </Compile>
@@ -107,6 +110,10 @@
     <Compile Include="WelcomePage.xaml.cs">
       <DependentUpon>WelcomePage.xaml</DependentUpon>
     </Compile>
+    <Page Include="AcknowledgementsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AddOrUpdatePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

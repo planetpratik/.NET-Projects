@@ -15,9 +15,7 @@ using System.Windows.Shapes;
 
 namespace DOT_Logs
 {
-    /// <summary>
-    /// Interaction logic for WelcomePage.xaml
-    /// </summary>
+    // Created by Pratik Chougule - Final Year B.Tech CST , DOT-SUK - Year 2015-16
     public partial class WelcomePage : Page
     {
         public WelcomePage()
@@ -33,6 +31,11 @@ namespace DOT_Logs
         {
             ViewLogPage viewLog = new ViewLogPage();
             this.NavigationService.Navigate(viewLog);
+        }
+        private void AcknowledgementButtonClicked(object sender, RoutedEventArgs e)
+        {
+            AcknowledgementsPage Acknowledgement = new AcknowledgementsPage();
+            this.NavigationService.Navigate(Acknowledgement);
         }
     }
 }

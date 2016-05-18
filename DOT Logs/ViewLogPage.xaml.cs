@@ -17,9 +17,7 @@ using System.Data;
 
 namespace DOT_Logs
 {
-    /// <summary>
-    /// Interaction logic for ViewLogPage.xaml
-    /// </summary>
+    // Created by Pratik Chougule - Final Year B.Tech CST , DOT-SUK - Year 2015-16
     public partial class ViewLogPage : Page
     {
         SQLiteConnection connection;

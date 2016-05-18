@@ -17,9 +17,7 @@ using System.Data;
 
 namespace DOT_Logs
 {
-    /// <summary>
-    /// Interaction logic for AddOrUpdatePage.xaml
-    /// </summary>
+   // Created by Pratik Chougule - Final Year B.Tech CST , DOT-SUK - Year 2015-16
     public partial class AddOrUpdatePage : Page
     {
         SQLiteConnection connection;
@@ -113,9 +111,16 @@ namespace DOT_Logs
             }
             catch(SQLiteException error)
             {
-                Console.WriteLine(error.Message);
-                MessageBox.Show(error.Message,"Insert Command Error");
-                this.closeDatabaseConnection();
+                if (rollNoTextbox.Text == null || nameOfClassCombobox.SelectedItem == null || nameOfProgrammeComboBox.SelectedItem == null || batchCombobox.SelectedItem == null || semesterComboBox.SelectedItem == null || nameOfSubjectCombobox.SelectedItem == null)
+                {
+                    MessageBox.Show("You Must have to provide 'Roll No', 'Class Name', 'Programme Name', 'Batch', 'Semester' & 'Subject' To Create New Entry", "Error");
+                }
+                else
+                {
+                    Console.WriteLine(error.Message);
+                    MessageBox.Show(error.Message, "Insert Command Error");
+                    this.closeDatabaseConnection();
+                }   
             }
            
         }
@@ -155,7 +160,7 @@ namespace DOT_Logs
                 {
                     if (rollNoTextbox.Text == null || nameOfClassCombobox.SelectedItem == null || nameOfProgrammeComboBox.SelectedItem == null)
                     {
-                        MessageBox.Show("SQL Query Input Error. You Must have to provide Roll No, Class Name & Programme Name.", "Error");
+                        MessageBox.Show("You Must have to provide 'Roll No', 'Class Name' & 'Programme Name' to search the records.", "Error");
                     }
                     MessageBox.Show("No Record Found In The Database");
                 }
@@ -164,7 +169,7 @@ namespace DOT_Logs
             {
                 if (rollNoTextbox.Text == null || nameOfClassCombobox.SelectedItem == null || nameOfProgrammeComboBox.SelectedItem == null)
                 {
-                    MessageBox.Show("SQL Query Input Error. You Must have to provide Roll No, Class Name & Programme Name.", "Error");
+                    MessageBox.Show("You Must have to provide 'Roll No', 'Class Name' & 'Programme Name' to search the records.", "Error");
                 }
                 else
                 {
@@ -505,10 +510,10 @@ namespace DOT_Logs
 
             else if ((string)nameOfClassCombobox.SelectedItem == "Second Year B.Tech" && (string)nameOfProgrammeComboBox.SelectedItem == "Mechanical Technology" && (string)semesterComboBox.SelectedItem == "Semester IV")
             {
-                nameOfSubjectCombobox.Items.Add("");
-                nameOfSubjectCombobox.Items.Add("");
-                nameOfSubjectCombobox.Items.Add("");
-                nameOfSubjectCombobox.Items.Add("");
+                nameOfSubjectCombobox.Items.Add("Fluid & Turbo Machinery Lab");
+                nameOfSubjectCombobox.Items.Add("Material Science & Metallurgy Lab");
+                nameOfSubjectCombobox.Items.Add("Workshop Practice - II");
+                nameOfSubjectCombobox.Items.Add("Theory Of Machine - I Lab");
                 
             }
 
@@ -592,8 +597,6 @@ namespace DOT_Logs
                 nameOfSubjectCombobox.Items.Add("Mass Transfer - II Laboratory");
                 nameOfSubjectCombobox.Items.Add("Reaction Engineering I Laboratory");
                 nameOfSubjectCombobox.Items.Add("Mini Project");
-
-       
 
             }
 
