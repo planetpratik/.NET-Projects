@@ -1,0 +1,32 @@
+﻿<Page x:Class="DOT_Logs.WelcomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DOT_Logs"
+      mc:Ignorable="d"
+      Title="WelcomePage"
+      HorizontalAlignment="Stretch"
+      VerticalAlignment="Stretch">
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="Resources/Image_SU.jpg"/>
+        </Grid.Background>
+        <TextBlock x:Name="textBlock" Height="45" Margin="62.296,18.5,39,0" TextWrapping="Wrap" Text="Welcome To Shivaji University, Kolhapur" VerticalAlignment="Top" RenderTransformOrigin="0.513,0.677" TextAlignment="Center" LineHeight="8" FontSize="29.333"/>
+        <Menu x:Name="menu" HorizontalAlignment="Left" Height="30" Margin="10,25,0,0" VerticalAlignment="Top" Width="34" RenderTransformOrigin="0.5,0.5">
+            <Menu.Background>
+                <ImageBrush ImageSource="Resources/MenuIcon.png" Stretch="Uniform"/>
+            </Menu.Background>
+            <Menu.BitmapEffect>
+                <OuterGlowBitmapEffect/>
+            </Menu.BitmapEffect>
+            <MenuItem Height="30" Width="34">
+                <MenuItem Header="Add Or Update Log" Click="AddOrUpdateLogButtonClicked"/>
+                <MenuItem Header="View Entire Logs" Click="ViewEntireLogButtonClicked"/>
+                <MenuItem Header="Acknowledgements" Click="AcknowledgementButtonClicked"/>
+            </MenuItem>
+
+        </Menu>
+    </Grid>
+</Page>
